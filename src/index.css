@@ -1,0 +1,23 @@
+
+
+.main-container{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-direction: column;
+}
+
+.container{
+  display: flex;
+  margin: 0.8rem;
+  flex-direction: column;
+  
+}
+h2{
+  margin: 0;
+}
+input{
+  padding: 0.6rem;
+  font-size: large;
+  
+}
