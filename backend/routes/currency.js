@@ -1,6 +1,12 @@
 const express = require('express')
 const router = express.Router();
-const { Currency } = require('../models/currency');
+let Currency;
+
+if (process.env.NODE_ENV === "test") {
+  Currency = require('../models/testCurrency').Currency;
+} else {
+  Currency = require('../models/currency').Currency;
+}
 require('dotenv').config()
 
 
@@ -48,7 +54,7 @@ router.post('/currency', async (request, response) => {
     let post = request.body;
 
     console.log(post);
-    if (post.hasOwnProperty('currencyCode') && post.hasOwnProperty('countryId') && post.hasOwnProperty('conversionRate')) {
+    if (post.hasOwnProperty('currencyCode') && post.hasOwnProperty('conversionRate')) {
       let res = await currencies.create(post);
       response.status(200).json(res)
     }
@@ -73,10 +79,10 @@ router.put('/currency/:id/:newRate', async (request, response) => {
   try {
     let id = parseInt(request.params.id);
     let reqRate = parseFloat(request.params.newRate);
-    let [_, update] = await currencies.update({ conversionRate: reqRate }, { where: { id },returning:true },);
+    let [_, update] = await currencies.update({ conversionRate: reqRate }, { where: { id }, returning: true },);
     console.log(update);
     response.json(update)
-    
+
   } catch (error) {
     console.log(error);
   }
@@ -98,7 +104,7 @@ router.delete('/currency/:id', async (request, response) => {
     else {
       response.status(404).send("invalid id")
     }
-    
+
   } catch (error) {
     console.log(error);
   }

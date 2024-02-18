@@ -6,9 +6,9 @@ const countryRoute = require('./routes/countries.js')
 const joinedRoute = require('./routes/currency-countryName.js')
 require('dotenv').config()
 
-const {Sequelize} = require('sequelize')
+const { Sequelize } = require('sequelize')
 
-const sequelize = new Sequelize(`postgres://`+process.env.UN+`:`+ process.env.PASSWORD+`@`+process.env.DB_HOSTNAME+`/`+process.env.DB_NAME+"?ssl=true",{dialect:'postgres',protocol:'postgres'})
+const sequelize = new Sequelize(`postgres://` + process.env.UN + `:` + process.env.PASSWORD + `@` + process.env.DB_HOSTNAME + `/` + process.env.DB_NAME + "?ssl=true", { dialect: 'postgres', protocol: 'postgres' })
 sequelize
   .authenticate()
   .then(() => {
@@ -19,7 +19,7 @@ sequelize
   });
 
 
-const {wildcard, morganLogger} = require('./utils/middleware.js')
+const { wildcard, morganLogger } = require('./utils/middleware.js')
 /**
  * Initial application setup
  * We need to use cors so we can connect to a localhost later
@@ -40,6 +40,15 @@ app.get('/', (request, response) => {
 
 app.use(wildcard);
 const PORT = 3001
-app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`)
-})
+// In other environments (e.g., development, production), start the server
+let server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+if (process.env.NODE_ENV === 'test') {
+  // In test environment, export the app instance for testing
+  module.exports = { server, sequelize };
+}
+
+// app.listen(PORT, () => {
+//   console.log(`Server running on port: ${PORT}`)
+// })
