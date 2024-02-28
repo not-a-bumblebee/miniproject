@@ -28,4 +28,9 @@ jobs:
           cd ../client
           npm install
           npm run test
+      
+      - name: Deploy Server
+        run: curl ${{ secrets.SERVER_DEPLOYMENT_HOOK }}  
 
+      - name: Deploy Client
+        run: curl ${{ secrets.CLIENT_DEPLOYMENT_HOOK }}
