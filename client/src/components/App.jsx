@@ -40,7 +40,7 @@ const App = () => {
     let conversionRate = e.target.parentNode.children[3].value
     let body = { id, currencyCode, countryId, conversionRate }
     console.log(body);
-    let res = await (await fetch('http://localhost:3001/api/currency', {
+    let res = await (await fetch('/api/currency', {
       method: 'POST', body: JSON.stringify(body), headers: {
         'Content-Type': 'application/json',
       },
@@ -50,23 +50,23 @@ const App = () => {
   const deleteCurrency = async (e) => {
     let currencyCode = e.target.parentNode.children[0].value.toUpperCase();
     console.log(currencyCode);
-    let res1 = await (await fetch('http://localhost:3001/api/currency/')).json()
+    let res1 = await (await fetch('/api/currency/')).json()
 
     let id = res1.find(x => x.currencyCode == currencyCode).id;
     console.log(id);
 
-    let res2 = await fetch('http://localhost:3001/api/currency/' + id, { method: "DELETE" })
+    let res2 = await fetch('/api/currency/' + id, { method: "DELETE" })
     console.log(res2);
   }
   const updateCurrency = async (e) => {
     let currencyCode = e.target.parentNode.children[0].value.toUpperCase();
     console.log(currencyCode);
-    let res1 = await (await fetch('http://localhost:3001/api/currency/')).json()
+    let res1 = await (await fetch('/api/currency/')).json()
 
     let id = res1.find(x => x.currencyCode == currencyCode).id;
     console.log(id);
     let amount = e.target.parentNode.children[1].value
-    let res2 = await (await fetch('http://localhost:3001/api/currency/' + id + '/' + amount, { method: 'PUT' })).json()
+    let res2 = await (await fetch('/api/currency/' + id + '/' + amount, { method: 'PUT' })).json()
     console.log(res2);
   }
 
@@ -75,7 +75,7 @@ const App = () => {
     let amount = e.target.parentNode.children[1].value
     console.log(currencyCode, amount);
 
-    let res = await axios.get('http://localhost:3001/api/currency/')
+    let res = await axios.get('/api/currency/')
     console.log(res.data);
 
     let a = res.data.find(x=>x.currencyCode==currencyCode);
