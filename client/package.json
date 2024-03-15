@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "jest --verbose -runInBand",
+    "test": "jest --verbose -runInBand --testPathPattern=/client/",
     "build": "vite build",
     "preview": "vite preview"
   },

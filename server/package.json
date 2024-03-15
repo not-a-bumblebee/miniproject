@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "set NODE_ENV=dev && node server.js",
-    "test": "cross-env NODE_ENV=test jest --verbose -runInBand"
+    "test": "cross-env NODE_ENV=test jest --verbose -runInBand --testPathPattern=/server/tests"
   },
   "author": "Student",
   "license": "ISC",

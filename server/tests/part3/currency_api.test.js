@@ -6,6 +6,7 @@ const { sequelize, server } = require('../../server.js')
 const helper = require('./test_helper')
 const api = supertest(server) // Creates a test api that will send requests where we want them to be sent
 
+
 beforeEach(async () => {
   // Setup currencies table (if not already setup)
   await helper.init()
