@@ -20,6 +20,8 @@ import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../../components/App";
+import {http, rest} from 'msw'
+import {setupServer} from 'msw/node'
 /**
  * Import all the related component(s) here:
  * 
@@ -35,7 +37,57 @@ import App from "../../components/App";
  */
 
 
+const mockData =[
+    {
+        "id": 2,
+        "currencyCode": "US",
+        "countryId": 2,
+        "conversionRate": 4.1
+    },
+    {
+        "id": 9,
+        "currencyCode": "PASTA",
+        "countryId": 7,
+        "conversionRate": 2.2
+    },
+    {
+        "id": 10,
+        "currencyCode": "USD",
+        "countryId": 2,
+        "conversionRate": 0.75
+    },
+    {
+        "id": 1,
+        "currencyCode": "CAD",
+        "countryId": 1,
+        "conversionRate": 2
+    }
+]
+
+
+const server = setupServer(
+    // rest.get('/api/currency', (req, res, ctx) => {
+    //   return res(ctx.json(mockData))
+    // }),
+    http.get('/api/currency', () => {
+        return new Response(JSON.stringify(mockData),{
+        headers:{
+            'Content-Type': 'application/json',
+        }
+      })
+    }),
+  
+    
+  )
+
+  beforeAll(() => server.listen())
+  afterAll(() => server.close())
+
 test('Testing conversion section', async () => {
+
+
+
+
     // convertCurrency is a mock function now
     render(<App />)
 
