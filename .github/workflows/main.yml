@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: bob
 
     steps:
       - name: Checkout Repository
@@ -19,6 +20,7 @@ jobs:
           node-version: '20'
           
       - name: Install Dependencies and Build
+      
         run: |
           cd ./server
           npm install
